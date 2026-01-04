@@ -1,30 +1,24 @@
-from pprint import pprint
 from sys import argv
 from time import sleep
 import telepot              # Python framework for Telegram Bot API
-# from random import randint
-# import re                   # REGular EXpression
-
+from random import randint
 
 # ¯\_(ツ)_/¯
 
 
 def handle(msg):
     flavor = telepot.flavor(msg)
-    # pprint(msg)
-    # print('flavor = ' + flavor)
 
     # chat message
     if flavor == 'chat':
         content_type, chat_type, chat_id = telepot.glance(msg)
-        # print('content_type = ' + content_type)
-        # print('chat_type = ' + chat_type)
-        # print('chat_id = ' + str(chat_id))
+
         if chat_type == 'group' or chat_type == 'private':
             if content_type == 'text':
                 text = msg['text']
                 print('text = ' + text)
-                bot.sendMessage(chat_id, '¯\_(ツ)_/¯')
+                if randint(1, 20) == 1:
+                    bot.sendMessage(chat_id, r'¯\_(ツ)_/¯')
             else:
                 print('content_type = ' + content_type)
         else:
@@ -41,7 +35,10 @@ def handle(msg):
         print('Inline Query:', query_id, from_id, query_string)
 
         # Compose your own answers
-        articles = [{'type': 'article', 'id': 'abc', 'title': 'ABC', 'message_text': 'maaaaaan!'}]
+        articles = [{'type': 'article',
+                     'id': 'abc',
+                     'title': 'ABC',
+                     'message_text': 'maaaaaan!'}]
 
         bot.answerInlineQuery(query_id, articles)
 
@@ -54,7 +51,8 @@ def handle(msg):
     else:
         raise telepot.BadFlavor(msg)
 
-# The token has to be passed from command line because it has to be kept secret.
+
+# Token passed via command line to keep it secret.
 TOKEN = argv[1]
 
 bot = telepot.Bot(TOKEN)
