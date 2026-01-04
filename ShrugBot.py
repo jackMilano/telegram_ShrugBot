@@ -29,25 +29,6 @@ def handle(msg):
         query_id, from_id, query_data = telepot.glance(msg, flavor=flavor)
         print('Callback query:', query_id, from_id, query_data)
 
-    # inline query - need `/setinline`
-    elif flavor == 'inline_query':
-        query_id, from_id, query_string = telepot.glance(msg, flavor=flavor)
-        print('Inline Query:', query_id, from_id, query_string)
-
-        # Compose your own answers
-        articles = [{'type': 'article',
-                     'id': 'abc',
-                     'title': 'ABC',
-                     'message_text': 'maaaaaan!'}]
-
-        bot.answerInlineQuery(query_id, articles)
-
-    # chosen inline result - need `/setinlinefeedback`
-    elif flavor == 'chosen_inline_result':
-        result_id, from_id, query_string = telepot.glance(msg, flavor=flavor)
-        print('Chosen Inline Result:', result_id, from_id, query_string)
-        # Remember the chosen answer to do better next time
-
     else:
         raise telepot.BadFlavor(msg)
 
